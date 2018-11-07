@@ -1,0 +1,2 @@
+webpackJsonp([10],{"b+hn":function(e,n){},klHE:function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var c={render:function(){var e=this.$createElement;return(this._self._c||e)("div",[this._v("\n  采集心电图\n")])},staticRenderFns:[]};var r=t("VU/8")({name:"collect-e-c-g"},c,!1,function(e){t("b+hn")},"data-v-078dacd8",null);n.default=r.exports}});
+//# sourceMappingURL=10.389df2c3be2bd9acd8e8.js.map
