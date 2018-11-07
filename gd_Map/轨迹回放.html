@@ -1,0 +1,261 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>鼠标拾取地图坐标</title>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
+    <script type="text/javascript"
+            src="https://webapi.amap.com/maps?v=1.4.10&key=1c5d583e35c7b2d2ee30855ad10d0664&plugin=AMap.Autocomplete"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+     <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="container"></div>
+<div id="myPageTop">
+    <table>
+        <tr>
+            <td>
+                <label>按关键字搜索：</label>
+            </td>
+            <td class="column2">
+                <label>左击获取经纬度：</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" placeholder="请输入关键字进行搜索" id="tipinput">
+            </td>
+            <td class="column2">
+                <input type="text" readonly="true" id="lnglat">
+            </td>
+        </tr>
+    </table>
+</div>
+            <ul style="position: absolute;background: #fff;bottom: 0;">
+                <li class="jzrow">张三</li>
+                <li class="jzrow" onclick="jzsetLat()" >定位</li>
+                <li class="jzrow" onclick='jzHistoryMark()'>轨迹</li>
+                <li class="jzrow" onclick='startRun()'>动画</li>
+            </ul>
+
+<script type="text/javascript">
+    var map = new AMap.Map("container", {
+        resizeEnable: true,
+        center: [117.1419139142, 39.1157409540],
+	    zoom: 17
+    });
+    //为地图注册click事件获取鼠标点击出的经纬度坐标
+    var clickEventListener = map.on('click', function(e) {
+        document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
+    });
+    var auto = new AMap.Autocomplete({
+        input: "tipinput"
+    });
+    AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+    function select(e) {
+        if (e.poi && e.poi.location) {
+            map.setZoom(15);
+            map.setCenter(e.poi.location);
+        }
+    }
+    
+ 
+      var json1 = {
+                "dname": "张三",
+                "dongHua": [
+                    {
+                        "lngX": "117.1419139142", //高德：117.187386  //gps慧谷大厦：39.1157409540,117.1419139142
+                        "latY": "39.1157409540", // 高德：39.120544  
+                        "address": "天津市南开区红旗路220号慧谷大厦",
+                        "dTime": "2016-12-20 06:00"
+                    },
+                    {
+                        "lngX": "117.181942",
+                        "latY": "39.122237",
+                        "address": "天津市和平区甘肃路",
+                        "dTime": "2016-12-20 06:30"
+                    },
+                    {
+                        "lngX": "117.183078",
+                        "latY": "39.121749",
+                        "address": "天津市和平区鞍山道与甘肃路交口",
+                        "dTime": "2016-12-20 07:00"
+                    },
+                    {
+                        "lngX": "117.184110",
+                        "latY": "39.122973",
+                        "address": "天津市和平区鞍山道与陕西路交口",
+                        "dTime": "2016-12-20 07:30"
+                    },
+                    {
+                        "lngX": "117.185378",
+                        "latY": "39.122161",
+                        "address": "天津市和平区陕西路与四平东道交口",
+                        "dTime": "2016-12-20 08:00"
+                    },
+                    {
+                        "lngX": "117.184906",
+                        "latY": "39.121644",
+                        "address": "天津市和平区四平东道与宁夏路交口",
+                        "dTime": "2016-12-20 08:30"
+                    },
+                    {
+                        "lngX": "117.184562",
+                        "latY": "39.119743",
+                        "address": "天津市和平区房地产管理局",
+                        "dTime": "2016-12-20 09:00"
+                    }
+                ]
+            }
+    function startRun() { //动画方法
+            var ifr = document.getElementById('iframeRight');
+            var targetOrigin = '*';  
+            var  json1 = {
+                "dname": "张三",
+                "dongHua": [
+                    {
+                        "lngX": "117.1419139142", //高德：117.187386  //gps慧谷大厦：39.1157409540,117.1419139142
+                        "latY": "39.1157409540", // 高德：39.120544  
+                        "address": "天津市南开区红旗路220号慧谷大厦",
+                        "dTime": "2016-12-20 06:00"
+                    },
+                    {
+                        "lngX": "117.181942",
+                        "latY": "39.122237",
+                        "address": "天津市和平区甘肃路",
+                        "dTime": "2016-12-20 06:30"
+                    },
+                    {
+                        "lngX": "117.183078",
+                        "latY": "39.121749",
+                        "address": "天津市和平区鞍山道与甘肃路交口",
+                        "dTime": "2016-12-20 07:00"
+                    },
+                    {
+                        "lngX": "117.184110",
+                        "latY": "39.122973",
+                        "address": "天津市和平区鞍山道与陕西路交口",
+                        "dTime": "2016-12-20 07:30"
+                    },
+                    {
+                        "lngX": "117.185378",
+                        "latY": "39.122161",
+                        "address": "天津市和平区陕西路与四平东道交口",
+                        "dTime": "2016-12-20 08:00"
+                    },
+                    {
+                        "lngX": "117.184906",
+                        "latY": "39.121644",
+                        "address": "天津市和平区四平东道与宁夏路交口",
+                        "dTime": "2016-12-20 08:30"
+                    },
+                    {
+                        "lngX": "117.184562",
+                        "latY": "39.119743",
+                        "address": "天津市和平区房地产管理局",
+                        "dTime": "2016-12-20 09:00"
+                    }
+                ]
+            }
+            var func = { name: "startRun", arg: json }; //传输name名称以及json串
+            ifr.contentWindow.postMessage(func, targetOrigin);
+        }
+ 
+       //动画
+var lineArr; var marker3;
+function completeEventHandler(str) {    
+    var lngX = "";
+    var latY = "";
+    lineArr = [];
+console.log(str.dongHua[0].latY+",,,,,"+str.dongHua[0].lngX);
+    //设置动画图标position的起点
+   /* var arr_first = GPS.gcj_encrypt(parseFloat(str.dongHua[0].latY), parseFloat(str.dongHua[0].lngX));
+    var firstlngX = arr_first.lon.toFixed(6);
+    var firstlatY = arr_first.lat.toFixed(6);*/
+    var firstlngX = str.dongHua[0].latY;
+    var firstlatY = str.dongHua[0].lngX;
+	/*var mapObj = new AMap.Map("container", {
+	        resizeEnable: true,
+	        center: [117.1419139142, 39.1157409540],
+	        zoom: 17
+	    });*/
+    marker3 = new AMap.Marker({
+        map: map,
+        position: [firstlngX, firstlatY],
+        icon: "https://webapi.amap.com/images/car.png", //marker图标，直接传递地址url  
+        offset: new AMap.Pixel(-11, -10), //相对于基点的位置  
+        autoRotation: true   //根据线点自动转换方向
+    });
+console.log(parseFloat(str.dongHua[0].latY)+",,,,,"+parseFloat(str.dongHua[0].lngX));
+    lineArr.push(new AMap.LngLat(str.dongHua[0].latY,str.dongHua[0].lngX));
+    $.each(str.dongHua, function (index, item) {
+        lngX = parseFloat(item.lngX);
+        latY = parseFloat(item.latY);
+      /*  var arr_dongHua = GPS.gcj_encrypt(latY, lngX);
+        lngX = arr_dongHua.lon.toFixed(6);
+        latY = arr_dongHua.lat.toFixed(6);
+        lineArr.push(new AMap.LngLat(lngX, latY));*/
+       
+        lngX = item.lngX
+        latY = item.latY
+        lineArr.push(new AMap.LngLat(lngX, latY));
+        var getTime = item.dTime; //截取时间
+        getTime = getTime.substring(getTime.length - 5, getTime.length);
+        //加上带有时间的图标标记
+        var marker_jz = new AMap.Marker({
+            map: map,
+            content: '<div class=\"shequjz_donghua\">' + getTime + '</div>', //content: '<div class=\"maplocation_red\">' + (j + 1) + '</div>',
+            position: new AMap.LngLat(lngX, latY),
+            offset: new AMap.Pixel(-3, -3) //相对于基点的位置 
+        });
+        marker_jz.setMap(map); //在地图上添加点
+    });
+    //绘制轨迹  
+    var polyline = new AMap.Polyline({
+        map: map,
+        path: lineArr,
+        strokeColor: "#f13323",//线颜色  
+        strokeOpacity: 1,//线透明度  
+        strokeWeight: 2,//线宽  
+        strokeStyle: "solid",//线样式  
+    });    
+}
+function startRun(str) {  //开始播放动画
+	console.log(json1)
+    map.clearMap();
+    completeEventHandler(json1);    
+    map.setFitView(); //适应地图至居中
+    $(".righttopdiv-Animation").show();
+}
+//播放按钮
+function AnimationPlay(obj) {    
+    marker3.moveAlong(lineArr, 1000); //开始轨迹回放
+    $(obj).addClass("righttopdiv-row-click").siblings(".righttopdiv-row").removeClass("righttopdiv-row-click");
+}
+//暂停播放
+function AnimationPause(obj) {
+    marker3.pauseMove();//暂停轨迹回放
+    $(obj).addClass("righttopdiv-row-click").siblings(".righttopdiv-row").removeClass("righttopdiv-row-click");
+}
+//继续
+function AnimationResume(obj) {
+    marker3.resumeMove();
+    $(obj).addClass("righttopdiv-row-click").siblings(".righttopdiv-row").removeClass("righttopdiv-row-click");
+}
+//停止播放  //结束动画播放
+function AnimationStop(obj) {
+    marker3.stopMove();  //暂停轨迹回放
+    $(obj).addClass("righttopdiv-row-click").siblings(".righttopdiv-row").removeClass("righttopdiv-row-click");
+}
+//关闭播放
+function AnimationClose(obj) {
+    $(".righttopdiv-Animation").hide();
+    mapObj.clearMap();
+}
+
+
+</script>
+</body>
+</html>
